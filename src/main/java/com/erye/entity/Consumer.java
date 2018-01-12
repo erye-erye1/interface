@@ -8,7 +8,10 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import com.erye.service.ValidationServiceInter;
 
 /**
  * 测试  校验
@@ -18,15 +21,17 @@ public class Consumer implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@NotNull // 不允许为null
-	@Size(min=1, max=2) // 长度，不可用在Integer类型的参数上
+	@Size(min=1, max=20) // 长度，不可用在Integer类型的参数上
 	private String username;
 	
+	@NotNull(groups = ValidationServiceInter.Save.class) // 只有调用保存方法时才会验证,groups = ValidationServiceInter.class，不指定某个方法时，就是这个类下的全部验证
 	private String password;
 	
+	@Pattern(regexp="^[0-9] [a-z]{5}")
 	private String email;
 	
 	@Min(1) // 数字的最小值
-	@Max(10) // 数字的最大值
+	@Max(100) // 数字的最大值
 	private Integer age;
 	
 	@Past // 必须为一个过去的时间
